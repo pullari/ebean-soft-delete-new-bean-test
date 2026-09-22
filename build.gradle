@@ -1,0 +1,49 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'io.ebean' version '17.11.1'
+}
+
+group = 'com.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+def profile = project.hasProperty('profile') ? project.property('profile') : 'default'
+
+dependencies {
+    if (profile == '17.11.0') {
+        implementation 'io.ebean:ebean:17.11.0'
+        annotationProcessor 'io.ebean:querybean-generator:17.11.0'
+        testImplementation 'io.ebean:ebean-test:17.11.0'
+        implementation 'io.ebean:ebean-h2:17.11.0'
+    } else if (profile == '17.11.1') {
+        implementation 'io.ebean:ebean:17.11.1'
+        annotationProcessor 'io.ebean:querybean-generator:17.11.1'
+        testImplementation 'io.ebean:ebean-test:17.11.1'
+        implementation 'io.ebean:ebean-h2:17.11.1'
+    } else if (profile == '19.6.0') {
+        implementation 'io.ebean:ebean:19.6.0'
+        annotationProcessor 'io.ebean:querybean-generator:19.6.0'
+        testImplementation 'io.ebean:ebean-test:19.6.0'
+        implementation 'io.ebean:ebean-h2:19.6.0'
+    }
+
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.slf4j:slf4j-nop:2.0.19'
+}
+
+test {
+    useJUnit()
+    systemProperties = [
+        'ebean.test': 'true'
+    ]
+    
+    testLogging {
+        events = ["passed", "skipped", "failed"]
+        exceptionFormat = "full"
+        showStandardStreams = true
+    }
+}
