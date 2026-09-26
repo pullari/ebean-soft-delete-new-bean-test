@@ -26,5 +26,7 @@ public class ParentTest {
     parent.refresh();
 
     Assert.assertNull(parent.child);
+    // On ebean 17.11.0 and earlier this passes
+    // On ebean 17.11.1 and later this fails with parent.child being <Child@0(id:1, deleted:false)>
   }
 }
