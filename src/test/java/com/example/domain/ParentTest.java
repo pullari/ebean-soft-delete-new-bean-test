@@ -2,6 +2,7 @@ package com.example.domain;
 
 import domain.Child;
 import domain.Parent;
+import io.ebean.DB;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -24,6 +25,11 @@ public class ParentTest {
 
     child.delete();
     parent.refresh();
+
+    Parent newlyFetchedParent = DB.find(Parent.class).where().idEq(parent.id).findOne();
+
+    Assert.assertNull(newlyFetchedParent.child);
+    // This passes on ebean 17.11.0, 17.11.1 and 19.6.0
 
     Assert.assertNull(parent.child);
     // On ebean 17.11.0 and earlier this passes
